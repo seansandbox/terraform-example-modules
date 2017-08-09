@@ -49,7 +49,3 @@ variable "user_data" {
 	description = "The path to a custom userdata text file to execute on the provisioned EC2 instance."
 	default = "userdata.txt"
 }
-
-variable "admin_password" {
-	description = "The administrator password to set for the newly provisioned Windows instance."
-}
