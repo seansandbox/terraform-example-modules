@@ -1,11 +1,27 @@
 # Default security group to access the instances via WinRM over HTTP and HTTPS
 resource "aws_security_group" "default" {
-  name        = "RDP-WINRM"
+  name        = "RDP-WINRM-HTTP"
   description = "Provisioned by terraform"
   vpc_id      = "${var.vpc_id}"
 
   tags {
-    Name = "RDP-WINRM"
+    Name = "RDP-WINRM-HTTP"
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTPS access from anywhere
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   # WinRM access from anywhere
@@ -40,7 +56,7 @@ resource "aws_instance" "default" {
     ami = "${data.aws_ami.amazon_windows_2012R2.image_id}"
     key_name = "${var.key_name}"
     
-    # Our SG to allow WinRM access
+    # Our SG to allow WinRM/RDP/HTTP access
   	security_groups = ["${aws_security_group.default.id}"]
 
     subnet_id = "${var.subnet_id}"
