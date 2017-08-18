@@ -66,6 +66,23 @@ resource "aws_instance" "default" {
         Name = "${var.cloud_account_name}${var.ec2_instance_guest_os_type}${var.hosted_application}${format("%03d", var.environment_number_range + count.index + 1)}"
         Cost-Center = "${var.instance_tag_cost-center}"
     }
+
+    provisioner "chef"  {
+        environment             = "${var.chef_environment}"
+        run_list                = ["learn_chef_iis::default"]
+        attributes_json = <<-EOF
+          {
+            "set_hostname": "${var.cloud_account_name}${var.ec2_instance_guest_os_type}${var.hosted_application}${format("%03d", var.environment_number_range + count.index + 1)}",
+          }
+        EOF
+        node_name               = "${var.cloud_account_name}${var.ec2_instance_guest_os_type}${var.hosted_application}${format("%03d", var.environment_number_range + count.index + 1)}"
+        server_url              = "${var.chef_server_url}"
+        skip_install            = false
+        ssl_verify_mode         = ":verify_none"
+        validation_client_name  = "${var.chef_validation_client_name}"
+        validation_key          = "${var.chef_validation_key}"
+        recreate_client         = true
+    }
 }
 
 # Lookup the correct AMI based on the region specified

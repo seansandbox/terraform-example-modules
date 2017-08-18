@@ -29,3 +29,17 @@ variable "user_data" {
 	description = "The path to a custom userdata text file to execute on the provisioned EC2 instance."
 	default = "userdata.txt"
 }
+
+variable "chef_server_url" {}
+
+variable "chef_environment" {
+	description = "Chef environment"
+}
+
+variable "chef_validation_key" {
+	description = "The contents of the validation key that is needed by the node to register itself with the Chef Server. The key will be uploaded to the remote machine. Can also be loaded using file interpolation function."
+}
+
+variable "chef_validation_client_name" {
+	description = "Chef validation client name."
+}
