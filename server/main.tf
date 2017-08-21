@@ -81,6 +81,7 @@ resource "aws_instance" "default" {
         ssl_verify_mode         = ":verify_none"
         validation_client_name  = "${var.chef_validation_client_name}"
         validation_key          = "${var.chef_validation_key}"
+        # If you have an existing client node in chef, this will replace the existing node with this one.
         recreate_client         = true
     }
 }
