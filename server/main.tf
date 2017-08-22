@@ -84,13 +84,10 @@ resource "aws_instance" "default" {
     }
 }
 
-data "template_file" "user_data" {
-  template = "userdata.tpl"
+resource "template_file" "user_data" {
+  filename = "userdata.tpl"
   vars {
     admin_password = "${var.admin_password}"
-  }
-  lifecycle {
-    create_before_destroy = true
   }
 }
 
