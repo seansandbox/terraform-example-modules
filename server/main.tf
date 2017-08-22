@@ -81,6 +81,12 @@ resource "aws_instance" "default" {
         recreate_client         = true
         user_name               = "${var.chef_user_name}"
         user_key                = "${var.chef_user_key}"
+
+        connection {
+          type     = "winrm"
+          user     = "Administrator"
+          password = "${var.admin_password}"
+        }
     }
 }
 

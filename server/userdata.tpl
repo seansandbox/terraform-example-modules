@@ -5,8 +5,8 @@
   netsh advfirewall firewall add rule name="WinRM Inbound" protocol=TCP dir=in profile=any localport=5985 remoteip=any localip=any action=allow
   # Set Administrator password
   try {
-  	#$admin = [adsi]("WinNT://./administrator, user")
-  	#$admin.psbase.invoke("SetPassword", "${admin_password}")
+  	$admin = [adsi]("WinNT://./administrator, user")
+  	$admin.psbase.invoke("SetPassword", "${admin_password}")
     "${admin_password}" | Out-File c:\test_admin_password.log
   }
   catch {
