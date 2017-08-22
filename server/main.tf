@@ -71,9 +71,7 @@ resource "aws_instance" "default" {
         environment             = "${var.chef_environment}"
         run_list                = ["learn_chef_iis::default"]
         attributes_json = <<-EOF
-          {
-            "set_hostname": "AWS14WVDBS851"
-          }
+          {"set_hostname":"${var.cloud_account_name}${var.ec2_instance_guest_os_type}${var.hosted_application}${format("%03d", var.environment_number_range + count.index + 1)}"}
         EOF
         node_name               = "${var.cloud_account_name}${var.ec2_instance_guest_os_type}${var.hosted_application}${format("%03d", var.environment_number_range + count.index + 1)}"
         server_url              = "${var.chef_server_url}"
