@@ -61,7 +61,7 @@ resource "aws_instance" "default" {
 
     subnet_id = "${var.subnet_id}"
     instance_type = "${var.instance_type}"
-    user_data = "${file(var.user_data)}"
+    user_data = "${template_file.user_data.rendered}"
     tags {
         Name = "${var.cloud_account_name}${var.ec2_instance_guest_os_type}${var.hosted_application}${format("%03d", var.environment_number_range + count.index + 1)}"
         Cost-Center = "${var.instance_tag_cost-center}"
@@ -82,6 +82,16 @@ resource "aws_instance" "default" {
         user_name               = "${var.chef_user_name}"
         user_key                = "${var.chef_user_key}"
     }
+}
+
+data "template_file" "user_data" {
+  template = "userdata.tpl"
+  vars {
+    admin_password = "${var.admin_password}"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # Lookup the correct AMI based on the region specified
