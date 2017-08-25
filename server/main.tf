@@ -90,8 +90,8 @@ resource "aws_instance" "default" {
     }
 }
 
-resource "template_file" "user_data" {
-  filename = "userdata.tpl"
+data "template_file" "user_data" {
+  template = "userdata.tpl"
   vars {
     admin_password = "${var.admin_password}"
   }
