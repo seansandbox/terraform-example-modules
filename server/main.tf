@@ -69,7 +69,7 @@ resource "aws_instance" "default" {
 
     provisioner "chef"  {
         environment             = "${var.chef_environment}"
-        run_list                = ["learn_chef_iis::default"]
+        run_list                = ["${split(",", var.chef_run_list)}"]
         attributes_json = <<-EOF
           {"set_hostname":"${var.cloud_account_name}${var.ec2_instance_guest_os_type}${var.hosted_application}${format("%03d", var.environment_number_range + count.index + 1)}"}
         EOF
