@@ -1,11 +1,11 @@
-# Default security group to access the instances via WinRM over HTTP and HTTPS
+# Default security group to access the instances via WinRM over HTTP and HTTPS, as well as RDP
 resource "aws_security_group" "default" {
-  name        = "RDP-WINRM-HTTP"
+  name        = "${var.server_instance_sg_name}"
   description = "Provisioned by terraform"
   vpc_id      = "${var.vpc_id}"
 
   tags {
-    Name = "RDP-WINRM-HTTP"
+    Name = "${var.server_instance_sg_name}"
   }
 
   # HTTP access from anywhere

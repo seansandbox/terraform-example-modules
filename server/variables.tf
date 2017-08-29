@@ -43,3 +43,5 @@ variable "chef_user_key" {}
 variable "chef_run_list" {}
 
 variable "admin_password" {}
+
+variable "server_instance_sg_name" {}
