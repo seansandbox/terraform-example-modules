@@ -70,7 +70,7 @@ resource "aws_instance" "default" {
     provisioner "remote-exec" {
       inline = [
         "mkdir C:\\remotedata",
-        "echo \"${var.instance_remote_data}\" > C:\\remotedata\\remotedata.txt"
+        "echo ${var.instance_remote_data} > C:\\remotedata\\remotedata.txt"
       ]
 
       connection {
