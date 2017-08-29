@@ -45,3 +45,7 @@ variable "chef_run_list" {}
 variable "admin_password" {}
 
 variable "server_instance_sg_name" {}
+
+variable "instance_remote_data" {
+	description = "Some remote data to write to the instance. Separate entries by semicolon. This will be written to a text file on the instance under C:\remotedata\remotedata.txt"
+}

@@ -67,6 +67,18 @@ resource "aws_instance" "default" {
         Cost-Center = "${var.instance_tag_cost-center}"
     }
 
+    provisioner "remote-exec" {
+      inline = [
+        "echo ${instance_remote_data} >> C:\\remotedata\\remotedata.txt"
+      ]
+
+      connection {
+        type     = "winrm"
+        user     = "Administrator"
+        password = "${var.admin_password}"
+      }
+    }
+
     provisioner "chef"  {
         environment             = "${var.chef_environment}"
         run_list                = ["${split(",", var.chef_run_list)}"]
